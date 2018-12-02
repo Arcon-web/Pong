@@ -1,8 +1,6 @@
-let bootState = {
-    create: function()
-    {
-        game.physics.startSystem(Phaser.Physics.AUTO);
+var Boot = {};
 
-        game.state.start('load');
-    }
+Boot.create = function() {
+    game.physics.startSystem(Phaser.Physics.AUTO);
+    game.state.start('load');
 }

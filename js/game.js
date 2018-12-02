@@ -1,11 +1,12 @@
 let game = new Phaser.Game(window.innerWidth,window.innerHeight, Phaser.AUTO, 'gameDiv');
 
 
-game.state.add('boot', bootState);
-game.state.add('load', loadState);
-game.state.add('menu', menuState);
-game.state.add('end', endState);
-game.state.add('play', playState);
+game.state.add('boot', Boot);
+game.state.add('load', Load);
+game.state.add('menu', Menu);
+game.state.add('end', End);
+game.state.add('play', Play);
+game.state.add('wait', Wait);
 
 
 game.state.start('boot');
