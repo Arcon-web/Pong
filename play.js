@@ -34,18 +34,17 @@ let playState = {
         downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         
         //creation of paddles
-        paddle1 = this.create_paddle1(0,game.world.centerY);
-        paddle2 = this.create_paddle2(game.world.width-8,game.world.centerY);
-
+        paddle1 = this.CreatePaddle(0,game.world.centerY);
+        paddle2 = this.CreatePaddle(game.world.width-8,game.world.centerY);
         paddle1.scale.setTo(0.5);
         paddle2.scale.setTo(0.5);
 
         //create the ball
-        ball = this.create_ball(game.world.centerX,game.world.centerY);
+        ball = this.CreateBall(game.world.centerX,game.world.centerY);
 
         //movement of the ball
         ball.visible = false;
-        game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
+        game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.LaunchBall, this);
         
 
         //text rendering
@@ -55,9 +54,7 @@ let playState = {
 
     update: function()
     {
-        this.control_paddle(paddle1,game.input.y);
-        this.control_paddle(paddle2,game.input.y);
-
+        this.ControlPaddle(paddle1,game.input.y);
 
         //collisions ball with paddles
         game.physics.arcade.collide(paddle1,ball);
@@ -70,12 +67,12 @@ let playState = {
         if (ball.body.blocked.left)
         {
             score2 +=1;
-            this.resetBall();
+            this.ResetBall();
         }
         else if (ball.body.blocked.right)
         {
             score1 +=1;
-            this.resetBall();
+            this.ResetBall();
         }
 
         if(score2 == scoreToWin)
@@ -90,27 +87,17 @@ let playState = {
         }
     },
 
-    create_paddle1: function(x,y)
+    CreatePaddle: function(x,y)
     {
-        let paddle1 = game.add.sprite(x,y,'paddle')
-        paddle1.anchor.setTo(0.5,0.5);
-        game.physics.arcade.enable(paddle1);
-        paddle1.body.collideWorldBounds = true;
-        paddle1.body.immovable=true;
-        return paddle1;
+        let paddle = game.add.sprite(x,y,'paddle')
+        paddle.anchor.setTo(0.5,0.5);
+        game.physics.arcade.enable(paddle);
+        paddle.body.collideWorldBounds = true;
+        paddle.body.immovable=true;
+        return paddle;
     },
 
-    create_paddle2: function(x,y)
-    {
-        let paddle2 = game.add.sprite(x,y,'paddle')
-        paddle2.anchor.setTo(0.5,0.5);
-        game.physics.arcade.enable(paddle2);
-        paddle2.body.collideWorldBounds = true;
-        paddle2.body.immovable=true;
-        return paddle2;
-    },
-
-    create_ball:function(x,y)   
+    CreateBall:function(x,y)   
     { 
         let ball = game.add.sprite(x,y,'ball') 
         ball.anchor.setTo(0.5,0.5);
@@ -122,7 +109,7 @@ let playState = {
     },
 
 
-    control_paddle: function(paddle,y)
+    ControlPaddle: function(paddle,y)
     {
         
         if (upKey.isDown)
@@ -137,17 +124,17 @@ let playState = {
         }
     },
 
-    launch_ball: function()
+    LaunchBall: function()
     {
         ball.visible = true;
         let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
         
         game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
     },
-    resetBall: function () {
+    ResetBall: function () {
         ball.reset(game.world.centerX, game.rnd.between(0, game.world.height));
         ball.visible = false;
-        game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
+        game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.LaunchBall, this);
     }
     
 
