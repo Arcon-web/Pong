@@ -3,11 +3,14 @@ let downKey;
 
 let paddle1;
 let paddle2;
-let paddle_velocity = 5;
+let paddle_velocity = 600;
 
 let ball;
 let ball_launched;
-let ball_velocity = 800;
+let ballVelocity= 700;
+let ballRandomStartingAngleLeft= [-120, 120];
+let ballRandomStartingAngleRight= [-60, 60];
+let ballStartDelay= 2;
 
 let score1_text;
 let score2_text;
@@ -37,7 +40,8 @@ let playState = {
         ball = this.create_ball(game.world.centerX,game.world.centerY);
 
         //movement of the ball
-        ball_launched = false;
+        ball.visible = false;
+        game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
         
 
         //start ball movement
@@ -63,7 +67,8 @@ let playState = {
         if (ball.body.blocked.left)
         {
             score2 +=1;
-        }else if (ball.body.blocked.right)
+        }
+        else if (ball.body.blocked.right)
         {
             score1 +=1;
         }
@@ -102,28 +107,22 @@ let playState = {
         
         if (upKey.isDown)
         {
-            paddle.y-=paddle_velocity;
-        }else if (downKey.isDown)
+            paddle.body.velocity.y = -paddle_velocity;
+        }
+        else if (downKey.isDown)
         {
-            paddle.y+=paddle_velocity;
+            paddle.body.velocity.y = paddle_velocity;
+        }else{
+            paddle.body.velocity.y = 0;
         }
     },
 
     launch_ball: function()
     {
-        if (ball_launched)
-        {
-            ball.x = game.world.centerX;
-            ball.y = game.world.centerY;
-            ball.body.velocity.setTo(0,0);
-            ball_launched = false;
-        }else
-        {
-            ball.body.velocity.x  = ball_velocity;
-            ball.body.velocity.y  = ball_velocity;
-            ball_launched = true;
-
-        }
+        ball.visible = true;
+        let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
+        
+        game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
     }
     
 
