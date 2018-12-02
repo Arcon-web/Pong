@@ -12,7 +12,7 @@ let ballRandomStartingAngleLeft= [-60, 60];
 let ballRandomStartingAngleRight= [-60, 60];
 let ballStartDelay= 1;
 
-let scoreToWin = 1;
+let scoreToWin = 5;
 let winner;
 
 let score1_text;
