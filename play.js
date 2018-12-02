@@ -44,16 +44,8 @@ let playState = {
         game.input.onDown.add(this.launch_ball, this);
 
         //text rendering
-        score1_text = game.add.text(128,128,'0',{
-            font: "64px Gabriella",
-            fill:"#ffffff" ,
-            align: "center"
-        });
-        score2_text = game.add.text(game.world.width - 128,128,'0',{
-            font: "64px Gabriella",
-            fill:"#ffffff" ,
-            align: "center"
-        });
+        score1_text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
+        score2_text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
     },
 
     update: function()
@@ -63,8 +55,8 @@ let playState = {
         //collisions ball with paddles
         game.physics.arcade.collide(paddle1,ball);
         game.physics.arcade.collide(paddle2,ball);
-        //adding scores when hit the wall
 
+        //adding scores when hit the wall
         score1_text.text = score1;
         score2_text.text = score2;
 
@@ -75,8 +67,11 @@ let playState = {
         {
             score1 +=1;
         }
-        
-        
+
+        if(score2 == 10)
+        {
+            game.state.start('end');
+        }
 
     },
 
