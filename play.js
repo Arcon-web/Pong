@@ -7,10 +7,13 @@ let paddle_velocity = 600;
 
 let ball;
 let ball_launched;
-let ballVelocity= 700;
-let ballRandomStartingAngleLeft= [-120, 120];
+let ballVelocity= 900;
+let ballRandomStartingAngleLeft= [-60, 60];
 let ballRandomStartingAngleRight= [-60, 60];
-let ballStartDelay= 2;
+let ballStartDelay= 1;
+
+let scoreToWin = 1;
+let winner;
 
 let score1_text;
 let score2_text;
@@ -64,15 +67,23 @@ let playState = {
         if (ball.body.blocked.left)
         {
             score2 +=1;
+            this.resetBall();
         }
         else if (ball.body.blocked.right)
         {
             score1 +=1;
+            this.resetBall();
         }
 
-        if(score2 == 10)
+        if(score2 == scoreToWin)
         {
             game.state.start('end');
+            winner = "player2";
+        }
+        if(score1 == scoreToWin)
+        {
+            game.state.start('end');
+            winner = "player1";
         }
     },
 
@@ -119,6 +130,11 @@ let playState = {
         let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
         
         game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
+    },
+    resetBall: function () {
+        ball.reset(game.world.centerX, game.rnd.between(0, game.world.height));
+        ball.visible = false;
+        game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
     }
     
 
