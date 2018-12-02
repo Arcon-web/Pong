@@ -44,9 +44,6 @@ let playState = {
         game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
         
 
-        //start ball movement
-        game.input.onDown.add(this.launch_ball, this);
-
         //text rendering
         score1_text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
         score2_text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
@@ -77,7 +74,6 @@ let playState = {
         {
             game.state.start('end');
         }
-
     },
 
     create_paddle: function(x,y)
