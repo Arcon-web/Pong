@@ -4,5 +4,5 @@
 npm install
 
 ## Run:
-node server.js
+node server.js \
 go to localhost:8081
