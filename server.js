@@ -20,7 +20,7 @@ server.listen(process.env.PORT || 8081,function(){
 
 io.on('connection',function(socket){
 
-    socket.on('newplayer',function(){
+    socket.on('newPlayer',function(){
         if (server.player1 == null) {
             // player 1
             console.log('Player 1 joined');
@@ -62,7 +62,7 @@ io.on('connection',function(socket){
             io.emit('startGame');
         }
 
-        socket.on('move_paddle',function(id, y){
+        socket.on('movePaddle',function(id, y){
             socket.broadcast.emit('movePaddle', id, y);
         });
 

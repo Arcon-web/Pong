@@ -5,10 +5,10 @@ let downKey;
 
 let paddle1;
 let paddle2;
-let paddle_velocity = 600;
+let paddleVelocity = 600;
 
 let ball;
-let ball_launched;
+let ballLaunched;
 let ballVelocity= 900;
 let ballRandomStartingAngleLeft= [-60, 60];
 let ballRandomStartingAngleRight= [-60, 60];
@@ -17,8 +17,8 @@ let ballStartDelay= 1;
 let scoreToWin = 5;
 let winner;
 
-let score1_text;
-let score2_text;
+let score1Text;
+let score2Text;
 
 let score2 = 0;
 let score1 = 0;
@@ -33,19 +33,19 @@ Play.create = function() {
     downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
 
     //create the ball
-    ball = this.create_ball(game.world.centerX,game.world.centerY);
+    ball = this.createBall(game.world.centerX,game.world.centerY);
 
-    Play.create_paddle1();
-    Play.create_paddle2();
+    Play.createPaddle1();
+    Play.createPaddle2();
 
     //movement of the ball
     ball.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
+    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
     
 
     //text rendering
-    score1_text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
-    score2_text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
+    score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
+    score2Text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
 }
 
 Play.update = function() {
@@ -64,8 +64,8 @@ Play.update = function() {
     game.physics.arcade.collide(paddle2,ball);
 
     //adding scores when hit the wall
-    score1_text.text = score1;
-    score2_text.text = score2;
+    score1Text.text = score1;
+    score2Text.text = score2;
 
     if (ball.body.blocked.left)
     {
@@ -90,7 +90,7 @@ Play.update = function() {
     }
 }
 
-Play.create_paddle1 = function() {
+Play.createPaddle1 = function() {
     paddle1 = game.add.sprite(0,game.world.centerY,'paddle');
     paddle1.scale.setTo(0.5);
     paddle1.anchor.setTo(0.5,0.5);
@@ -100,7 +100,7 @@ Play.create_paddle1 = function() {
     return paddle1;
 }
 
-Play.create_paddle2 = function() {
+Play.createPaddle2 = function() {
     paddle2 = game.add.sprite(game.world.width-8,game.world.centerY,'paddle');
     paddle2.scale.setTo(0.5);
     paddle2.anchor.setTo(0.5,0.5);
@@ -110,7 +110,7 @@ Play.create_paddle2 = function() {
     return paddle2;
 }
 
-Play.create_ball = function(x,y) { 
+Play.createBall = function(x,y) {
     let ball = game.add.sprite(x,y,'ball') 
     ball.anchor.setTo(0.5,0.5);
     game.physics.arcade.enable(ball);
@@ -120,29 +120,29 @@ Play.create_ball = function(x,y) {
     return ball;
 }
 
-Play.move_up = function(id) {
+Play.moveUp = function(id) {
     if (id == 1) {
-        paddle1.body.velocity.y = -paddle_velocity;
+        paddle1.body.velocity.y = -paddleVelocity;
         Client.movePaddle(paddle1.y);
     }
     if (id == 2) {
-        paddle2.body.velocity.y = -paddle_velocity;
+        paddle2.body.velocity.y = -paddleVelocity;
         Client.movePaddle(paddle2.y);
     }
 }
 
-Play.move_down = function(id) {
+Play.moveDown = function(id) {
     if (id == 1) {
-        paddle1.body.velocity.y = paddle_velocity;
+        paddle1.body.velocity.y = paddleVelocity;
         Client.movePaddle(paddle1.y);
     }
     if (id == 2) {
-        paddle2.body.velocity.y = paddle_velocity;
+        paddle2.body.velocity.y = paddleVelocity;
         Client.movePaddle(paddle2.y);
     }
 }
 
-Play.move_none = function(id) {
+Play.moveNone = function(id) {
     if (id == 1) {
         paddle1.body.velocity.y = 0;
         Client.movePaddle(paddle1.y);
@@ -153,7 +153,7 @@ Play.move_none = function(id) {
     }
 }
 
-Play.move_paddle = function(id, y) {
+Play.movePaddle = function(id, y) {
     if (id == 1) {
         paddle1.y = y;
     }
@@ -162,7 +162,7 @@ Play.move_paddle = function(id, y) {
     }
 }
 
-Play.launch_ball = function() {
+Play.launchBall = function() {
     ball.visible = true;
     let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
     
@@ -172,9 +172,9 @@ Play.launch_ball = function() {
 Play.resetBall = function () {
     ball.reset(game.world.centerX, game.rnd.between(0, game.world.height));
     ball.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launch_ball, this);
+    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
 }
 
-Play.wait_game = function () {
+Play.waitGame = function () {
     game.state.start('wait');
 }

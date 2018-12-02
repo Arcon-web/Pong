@@ -5,23 +5,23 @@ Client.socket = io.connect();
 
 
 Client.askNewPlayer = function(){
-    Client.socket.emit('newplayer');
+    Client.socket.emit('newPlayer');
 };
 
 Client.moveUp = function(){
-    Play.move_up(clientID);
+    Play.moveUp(clientID);
 };
 
 Client.moveDown = function(){
-    Play.move_down(clientID);
+    Play.moveDown(clientID);
 };
 
 Client.moveNone = function(){
-    Play.move_none(clientID);
+    Play.moveNone(clientID);
 };
 
 Client.movePaddle = function(y){
-	Client.socket.emit('move_paddle', clientID, y);
+	Client.socket.emit('movePaddle', clientID, y);
 };
 
 
@@ -31,13 +31,13 @@ Client.socket.on('giveID',function(id){
 });
 
 Client.socket.on('startGame',function(id){
-	Wait.start_game();
+	Wait.startGame();
 });
 
 Client.socket.on('waitGame',function(){
-	Play.wait_game();
+	Play.waitGame();
 });
 
 Client.socket.on('movePaddle',function(id, y){
-	Play.move_paddle(id, y);
+	Play.movePaddle(id, y);
 });

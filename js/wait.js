@@ -11,6 +11,6 @@ Wait.create = function(){
     Client.askNewPlayer();
 }
 
-Wait.start_game = function(){
+Wait.startGame = function(){
 	game.state.start('play');
 }
