@@ -52,4 +52,3 @@ Client.socket.on('movePaddle', function(id, y){
 Client.socket.on('resetBall', function(y){
 	Play.resetBall(y);
 });
-

@@ -67,7 +67,9 @@ io.on('connection',function(socket){
         });
 
         socket.on('resetBall',function(y){
+            console.log('server check');
             socket.broadcast.emit('resetBall', y);
+
         });
 
         socket.on('disconnect',function(){
