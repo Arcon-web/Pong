@@ -88,10 +88,6 @@ Play.update = function() {
         game.state.start('end');
         winner = "player1";
     }
-
-    if (ball.visible = true) {
-        Client.updateBallPosition(ball.x, ball.y);
-    }
 }
 
 Play.createPaddle1 = function() {
@@ -166,16 +162,11 @@ Play.movePaddle = function(id, y) {
     }
 }
 
-Play.updateBallPosition = function(x, y) {
-    ball.x = x;
-    ball.y = y;
-}
-
 Play.launchBall = function() {
     ball.visible = true;
-    let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
+    //let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
     
-    game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
+    game.physics.arcade.velocityFromAngle(60, ballVelocity, ball.body.velocity);
 }
 
 Play.resetBall = function (y) {

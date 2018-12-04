@@ -31,12 +31,6 @@ Client.resetBall = function(y){
 	}
 };
 
-Client.updateBallPosition = function(x, y) {
-	if (clientID == 1) {
-		Client.socket.emit('updateBallPosition', x, y);
-	}
-};
-
 
 
 Client.socket.on('giveID', function(id){
@@ -59,8 +53,3 @@ Client.socket.on('resetBall', function(y){
 	Play.resetBall(y);
 });
 
-Client.socket.on('updateBallPosition', function(x, y){
-	if (clientID == 2) {
-		Play.updateBallPosition(x, y);
-	}
-});
