@@ -66,6 +66,14 @@ io.on('connection',function(socket){
             socket.broadcast.emit('movePaddle', id, y);
         });
 
+        socket.on('resetBall',function(y){
+            socket.broadcast.emit('resetBall', y);
+        });
+
+        socket.on('updateBallPosition',function(x, y){
+            socket.broadcast.emit('updateBallPosition', x, y);
+        });
+
         socket.on('disconnect',function(){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');

@@ -9,10 +9,10 @@ let paddleVelocity = 600;
 
 let ball;
 let ballLaunched;
-let ballVelocity= 900;
-let ballRandomStartingAngleLeft= [-60, 60];
-let ballRandomStartingAngleRight= [-60, 60];
-let ballStartDelay= 1;
+let ballVelocity = 900;
+let ballRandomStartingAngleLeft = [120, 240];
+let ballRandomStartingAngleRight = [-60, 60];
+let ballStartDelay = 1;
 
 let scoreToWin = 5;
 let winner;
@@ -35,13 +35,13 @@ Play.create = function() {
     //create the ball
     ball = this.createBall(game.world.centerX,game.world.centerY);
 
+    //create paddles
     Play.createPaddle1();
     Play.createPaddle2();
 
     //movement of the ball
     ball.visible = false;
     game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
-    
 
     //text rendering
     score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
@@ -70,12 +70,12 @@ Play.update = function() {
     if (ball.body.blocked.left)
     {
         score2 +=1;
-        this.resetBall();
+        Client.resetBall(game.rnd.between(0, game.world.height));
     }
     else if (ball.body.blocked.right)
     {
         score1 +=1;
-        this.resetBall();
+        Client.resetBall(game.rnd.between(0, game.world.height));
     }
 
     if(score2 == scoreToWin)
@@ -87,6 +87,10 @@ Play.update = function() {
     {
         game.state.start('end');
         winner = "player1";
+    }
+
+    if (ball.visible = true) {
+        Client.updateBallPosition(ball.x, ball.y);
     }
 }
 
@@ -162,6 +166,11 @@ Play.movePaddle = function(id, y) {
     }
 }
 
+Play.updateBallPosition = function(x, y) {
+    ball.x = x;
+    ball.y = y;
+}
+
 Play.launchBall = function() {
     ball.visible = true;
     let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
@@ -169,8 +178,8 @@ Play.launchBall = function() {
     game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
 }
 
-Play.resetBall = function () {
-    ball.reset(game.world.centerX, game.rnd.between(0, game.world.height));
+Play.resetBall = function (y) {
+    ball.reset(game.world.centerX, y);
     ball.visible = false;
     game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
 }

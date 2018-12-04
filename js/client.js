@@ -24,20 +24,43 @@ Client.movePaddle = function(y){
 	Client.socket.emit('movePaddle', clientID, y);
 };
 
+Client.resetBall = function(y){
+	if (clientID == 1) {
+		Client.socket.emit('resetBall', y);
+		Play.resetBall(y);
+	}
+};
+
+Client.updateBallPosition = function(x, y) {
+	if (clientID == 1) {
+		Client.socket.emit('updateBallPosition', x, y);
+	}
+};
 
 
-Client.socket.on('giveID',function(id){
+
+Client.socket.on('giveID', function(id){
 	clientID = id;
 });
 
-Client.socket.on('startGame',function(id){
+Client.socket.on('startGame', function(id){
 	Wait.startGame();
 });
 
-Client.socket.on('waitGame',function(){
+Client.socket.on('waitGame', function(){
 	Play.waitGame();
 });
 
-Client.socket.on('movePaddle',function(id, y){
+Client.socket.on('movePaddle', function(id, y){
 	Play.movePaddle(id, y);
+});
+
+Client.socket.on('resetBall', function(y){
+	Play.resetBall(y);
+});
+
+Client.socket.on('updateBallPosition', function(x, y){
+	if (clientID == 2) {
+		Play.updateBallPosition(x, y);
+	}
 });
