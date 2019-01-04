@@ -149,14 +149,12 @@ Play.movePaddle = function(id, y) {
 }
 
 Play.resetBall = function (y, angle) {
-    console.log('reset' + angle);
     ball.reset(game.world.centerX, y);
     ball.visible = false;
     game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, angle);
 }
 
 Play.launchBall = function(angle) {
-    console.log('launch' + angle);
     ball.visible = true;
     game.physics.arcade.velocityFromAngle(angle, ballVelocity, ball.body.velocity);
 }
