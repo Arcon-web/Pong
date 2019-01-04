@@ -3,7 +3,7 @@ var clientID;
 Client.socket = io.connect();
 
 
-
+// from phaser
 Client.askNewPlayer = function(){
     Client.socket.emit('newPlayer');
 };
@@ -25,10 +25,8 @@ Client.movePaddle = function(y){
 };
 
 Client.resetBall = function(y){
-	if (clientID == 1) {
-		Client.socket.emit('resetBall', y);
-		Play.resetBall(y);
-	}
+	Client.socket.emit('resetBall', y);
+	Play.resetBall(y);
 };
 
 Client.updateScore = function(score){
@@ -45,6 +43,7 @@ Client.disconnectAll = function(){
 
 
 
+// from server
 Client.socket.on('giveID', function(id){
 	clientID = id;
 });
