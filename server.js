@@ -73,12 +73,12 @@ io.on('connection',function(socket){
             socket.broadcast.emit('resetBall', y, angle);
         });
 
-        socket.on('updateScore',function(score){
-            if (score == '1') {
+        socket.on('updateScore',function(player){
+            if (player == '1') {
                 server.score1 += 1;
             }
 
-            if (score == '2') {
+            if (player == '2') {
                 server.score2 += 1;
             }
 
