@@ -33,6 +33,7 @@ Client.resetBall = function(y, angle){
 
 Client.updateScore = function(score){
 	Client.socket.emit('updateScore', score);
+	console.log('score +1');
 };
 
 Client.resetScore = function(){
