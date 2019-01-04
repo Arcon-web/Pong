@@ -77,21 +77,23 @@ io.on('connection',function(socket){
         socket.on('updateScore',function(player){
             if (player == '1') {
                 server.score1 += 1;
+
+                if (server.score1 == server.winningScore) {
+                    io.emit('winGame', 'player1');
+                }
             }
 
             if (player == '2') {
                 server.score2 += 1;
+
+                if (server.score2 == server.winningScore) {
+                    io.emit('winGame', 'player2');
+                }
             }
 
             io.emit('updateScore', server.score1, server.score2);
             
-            if (server.score1 == server.winningScore) {
-                io.emit('winGame', 'player1');
-            }
-
-            if (server.score2 == server.winningScore) {
-                io.emit('winGame', 'player2');
-            }
+            
         });
 
         socket.on('resetScore',function(){
