@@ -25,8 +25,10 @@ Client.movePaddle = function(y){
 };
 
 Client.resetBall = function(y){
-	Client.socket.emit('resetBall', y);
-	Play.resetBall(y);
+	if (clientID == 1) {
+		Client.socket.emit('resetBall', y);
+		Play.resetBall(y);
+	}
 };
 
 Client.updateScore = function(score){
