@@ -71,3 +71,7 @@ Client.socket.on('resetBall', function(y, angle){
 Client.socket.on('updateScore', function(score1, score2){
 	Play.updateScore(score1, score2);
 });
+
+Client.socket.on('winGame', function(player){
+	Play.winGame(player);
+});

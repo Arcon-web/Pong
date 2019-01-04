@@ -13,7 +13,6 @@ let ballVelocity = 900;
 let ballRandomStartingAngle = [-60, 60, 120, 240];
 let ballStartDelay = 1;
 
-let scoreToWin = 5;
 let winner;
 
 let score1Text;
@@ -162,17 +161,16 @@ Play.launchBall = function(angle) {
 Play.updateScore = function (score1, score2) {
     score1Text.text = score1;
     score2Text.text = score2;
+}
 
-    if(score2 == scoreToWin)
-    {
-        game.state.start('end');
-        winner = "player2";
-    }
-    if(score1 == scoreToWin)
-    {
-        game.state.start('end');
+Play.winGame = function (player) {
+    if (player == player1) {
         winner = "player1";
     }
+    if (player == player2) {
+        winner = "player2";
+    }
+    game.state.start('end');
 }
 
 Play.waitGame = function () {

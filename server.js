@@ -16,6 +16,7 @@ server.player2 = null;
 
 server.score1 = 0;
 server.score2 = 0;
+server.winningScore = 5;
 
 server.listen(process.env.PORT || 8081,function(){
     console.log('Listening on '+server.address().port);
@@ -83,6 +84,14 @@ io.on('connection',function(socket){
             }
 
             io.emit('updateScore', server.score1, server.score2);
+            
+            if (server.score1 == server.winningScore) {
+                io.emit('winGame', 'player1');
+            }
+
+            if (server.score2 == server.winningScore) {
+                io.emit('winGame', 'player2');
+            }
         });
 
         socket.on('resetScore',function(){
