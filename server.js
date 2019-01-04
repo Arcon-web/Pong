@@ -69,8 +69,8 @@ io.on('connection',function(socket){
             socket.broadcast.emit('movePaddle', id, y);
         });
 
-        socket.on('resetBall',function(y){
-            socket.broadcast.emit('resetBall', y);
+        socket.on('resetBall',function(y, angle){
+            socket.broadcast.emit('resetBall', y, angle);
         });
 
         socket.on('updateScore',function(score){

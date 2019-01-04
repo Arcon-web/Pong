@@ -10,8 +10,7 @@ let paddleVelocity = 600;
 let ball;
 let ballLaunched;
 let ballVelocity = 900;
-let ballRandomStartingAngleLeft = [120, 240];
-let ballRandomStartingAngleRight = [-60, 60];
+let ballRandomStartingAngle = [-60, 60, 120, 240];
 let ballStartDelay = 1;
 
 let scoreToWin = 5;
@@ -38,7 +37,7 @@ Play.create = function() {
 
     //movement of the ball
     ball.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
+    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, 60);
 
     //text rendering
     score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
@@ -67,12 +66,12 @@ Play.update = function() {
 
     if (ball.body.blocked.left)
     {
-        Client.resetBall(game.rnd.between(0, game.world.height));
+        Client.resetBall(game.rnd.between(0, game.world.height), game.rnd.pick(ballRandomStartingAngle));
         Client.updateScore('2');
     }
     else if (ball.body.blocked.right)
     {
-        Client.resetBall(game.rnd.between(0, game.world.height));
+        Client.resetBall(game.rnd.between(0, game.world.height), game.rnd.pick(ballRandomStartingAngle));
         Client.updateScore('1');
     }
 }
@@ -149,17 +148,17 @@ Play.movePaddle = function(id, y) {
     }
 }
 
-Play.launchBall = function() {
-    ball.visible = true;
-    let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
-    
-    game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
-}
-
-Play.resetBall = function (y) {
+Play.resetBall = function (y, angle) {
+    console.log('reset' + angle);
     ball.reset(game.world.centerX, y);
     ball.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
+    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, angle);
+}
+
+Play.launchBall = function(angle) {
+    console.log('launch' + angle);
+    ball.visible = true;
+    game.physics.arcade.velocityFromAngle(angle, ballVelocity, ball.body.velocity);
 }
 
 Play.updateScore = function (score1, score2) {

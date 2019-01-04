@@ -24,10 +24,10 @@ Client.movePaddle = function(y){
 	Client.socket.emit('movePaddle', clientID, y);
 };
 
-Client.resetBall = function(y){
+Client.resetBall = function(y, angle){
 	if (clientID == 1) {
-		Client.socket.emit('resetBall', y);
-		Play.resetBall(y);
+		Client.socket.emit('resetBall', y, angle);
+		Play.resetBall(y, angle);
 	}
 };
 
@@ -62,8 +62,8 @@ Client.socket.on('movePaddle', function(id, y){
 	Play.movePaddle(id, y);
 });
 
-Client.socket.on('resetBall', function(y){
-	Play.resetBall(y);
+Client.socket.on('resetBall', function(y, angle){
+	Play.resetBall(y, angle);
 });
 
 Client.socket.on('updateScore', function(score1, score2){
