@@ -35,6 +35,14 @@ Client.updateScore = function(score){
 	Client.socket.emit('updateScore', score);
 };
 
+Client.resetScore = function(){
+	Client.socket.emit('resetScore');
+};
+
+Client.disconnectAll = function(){
+	Client.socket.emit('disconnectAll');
+};
+
 
 
 Client.socket.on('giveID', function(id){

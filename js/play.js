@@ -44,7 +44,8 @@ Play.create = function() {
     score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
     score2Text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
 
-    //adding scores when hit the wall
+    //set score
+    Client.resetScore();
     score1Text.text = 0;
     score2Text.text = 0;
 }
@@ -150,9 +151,9 @@ Play.movePaddle = function(id, y) {
 
 Play.launchBall = function() {
     ball.visible = true;
-    //let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
+    let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
     
-    game.physics.arcade.velocityFromAngle(60, ballVelocity, ball.body.velocity);
+    game.physics.arcade.velocityFromAngle(randomAngle, ballVelocity, ball.body.velocity);
 }
 
 Play.resetBall = function (y) {

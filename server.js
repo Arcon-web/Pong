@@ -85,6 +85,11 @@ io.on('connection',function(socket){
             io.emit('updateScore', server.score1, server.score2);
         });
 
+        socket.on('resetScore',function(){
+            server.score1 = 0;
+            server.score2 = 0;
+        });
+
         socket.on('disconnect',function(){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');
@@ -101,6 +106,12 @@ io.on('connection',function(socket){
             else {
                 console.log('A spectator disconnected');
             }
+        });
+
+        socket.on('disconnectAll',function(){
+            console.log('Reset game');
+            server.player1 = null;
+            server.player2 = null;
         });
     });
 });
