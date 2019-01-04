@@ -164,10 +164,10 @@ Play.updateScore = function (score1, score2) {
 }
 
 Play.winGame = function (player) {
-    if (player == player1) {
+    if (player == "player1") {
         winner = "player1";
     }
-    if (player == player2) {
+    if (player == "player2") {
         winner = "player2";
     }
     game.state.start('end');

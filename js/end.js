@@ -1,7 +1,6 @@
 var End = {};
 
 End.create = function() {
-    Client.disconnectAll();
     let nameLabel = game.add.text(80, 80, winner+" won!" ,{font: '50px Arial', fill: '#ffffff'});
 
     let startLabel = game.add.text(80, game.world.height-80, 'press the "spacebar" key to start again',{font: '50px Arial', fill: '#ffffff'});
@@ -11,5 +10,6 @@ End.create = function() {
 }
 
 End.start = function() {
+    Client.disconnectAll();
     game.state.start('wait');
 }
