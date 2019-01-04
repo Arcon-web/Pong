@@ -14,6 +14,9 @@ app.get('/',function(req,res){
 server.player1 = null;
 server.player2 = null;
 
+server.score1 = 0;
+server.score2 = 0;
+
 server.listen(process.env.PORT || 8081,function(){
     console.log('Listening on '+server.address().port);
 });
@@ -68,6 +71,18 @@ io.on('connection',function(socket){
 
         socket.on('resetBall',function(y){
             socket.broadcast.emit('resetBall', y);
+        });
+
+        socket.on('updateScore',function(score){
+            if (score == '1') {
+                server.score1 += 1;
+            }
+
+            if (score == '2') {
+                server.score2 += 1;
+            }
+
+            io.emit('updateScore', server.score1, server.score2);
         });
 
         socket.on('disconnect',function(){

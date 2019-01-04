@@ -20,9 +20,6 @@ let winner;
 let score1Text;
 let score2Text;
 
-let score2 = 0;
-let score1 = 0;
-
 Play.create = function() {
     //game settings
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -46,6 +43,10 @@ Play.create = function() {
     //text rendering
     score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
     score2Text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
+
+    //adding scores when hit the wall
+    score1Text.text = 0;
+    score2Text.text = 0;
 }
 
 Play.update = function() {
@@ -63,30 +64,15 @@ Play.update = function() {
     game.physics.arcade.collide(paddle1,ball);
     game.physics.arcade.collide(paddle2,ball);
 
-    //adding scores when hit the wall
-    score1Text.text = score1;
-    score2Text.text = score2;
-
     if (ball.body.blocked.left)
     {
-        score2 +=1;
         Client.resetBall(game.rnd.between(0, game.world.height));
+        Client.updateScore('2');
     }
     else if (ball.body.blocked.right)
     {
-        score1 +=1;
         Client.resetBall(game.rnd.between(0, game.world.height));
-    }
-
-    if(score2 == scoreToWin)
-    {
-        game.state.start('end');
-        winner = "player2";
-    }
-    if(score1 == scoreToWin)
-    {
-        game.state.start('end');
-        winner = "player1";
+        Client.updateScore('1');
     }
 }
 
@@ -173,6 +159,22 @@ Play.resetBall = function (y) {
     ball.reset(game.world.centerX, y);
     ball.visible = false;
     game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
+}
+
+Play.updateScore = function (score1, score2) {
+    score1Text.text = score1;
+    score2Text.text = score2;
+
+    if(score2 == scoreToWin)
+    {
+        game.state.start('end');
+        winner = "player2";
+    }
+    if(score1 == scoreToWin)
+    {
+        game.state.start('end');
+        winner = "player1";
+    }
 }
 
 Play.waitGame = function () {

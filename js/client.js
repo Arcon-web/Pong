@@ -31,6 +31,10 @@ Client.resetBall = function(y){
 	}
 };
 
+Client.updateScore = function(score){
+	Client.socket.emit('updateScore', score);
+};
+
 
 
 Client.socket.on('giveID', function(id){
@@ -51,4 +55,8 @@ Client.socket.on('movePaddle', function(id, y){
 
 Client.socket.on('resetBall', function(y){
 	Play.resetBall(y);
+});
+
+Client.socket.on('updateScore', function(score1, score2){
+	Play.updateScore(score1, score2);
 });
