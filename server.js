@@ -93,12 +93,14 @@ io.on('connection',function(socket){
         socket.on('disconnect',function(){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');
+                socket.disconnect();
                 socket.broadcast.emit('waitGame');
                 server.player1 = null;
                 server.player2 = null;
             }
             else if (socket.player.id == 2) {
                 console.log('Player 2 disconnected');
+                socket.disconnect();
                 socket.broadcast.emit('waitGame');
                 server.player1 = null;
                 server.player2 = null;
@@ -110,6 +112,7 @@ io.on('connection',function(socket){
 
         socket.on('disconnectAll',function(){
             console.log('Reset game');
+            socket.disconnect();
             server.player1 = null;
             server.player2 = null;
         });
