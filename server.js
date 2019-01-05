@@ -23,7 +23,6 @@ server.listen(process.env.PORT || 8081,function(){
 });
 
 io.on('connection',function(socket){
-
     socket.on('newPlayer',function(){
         if (server.player1 == null) {
             // player 1
@@ -63,6 +62,7 @@ io.on('connection',function(socket){
 
         // start game when there are 2 players
         if (server.player1 != null && server.player2 != null) {
+            console.log("Game start");
             io.emit('startGame');
         }
 
@@ -80,6 +80,7 @@ io.on('connection',function(socket){
 
                 if (server.score1 == server.winningScore) {
                     io.emit('winGame', 'player1');
+                    console.log('Game end, player 1 won');
                 }
             }
 
@@ -88,6 +89,7 @@ io.on('connection',function(socket){
 
                 if (server.score2 == server.winningScore) {
                     io.emit('winGame', 'player2');
+                    console.log('Game end, player 2 won');
                 }
             }
 
@@ -99,31 +101,24 @@ io.on('connection',function(socket){
             server.score2 = 0;
         });
 
+        // socket.on('disconnectPlayer',function(){
+        //     socket.disconnect();
+        // });
+
         socket.on('disconnect',function(){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');
-                socket.disconnect();
-                socket.broadcast.emit('waitGame');
                 server.player1 = null;
-                server.player2 = null;
+                // socket.broadcast.emit('waitGame');
             }
             else if (socket.player.id == 2) {
                 console.log('Player 2 disconnected');
-                socket.disconnect();
-                socket.broadcast.emit('waitGame');
-                server.player1 = null;
                 server.player2 = null;
+                // socket.broadcast.emit('waitGame');
             }
             else {
                 console.log('A spectator disconnected');
             }
-        });
-
-        socket.on('disconnectAll',function(){
-            console.log('Reset game');
-            socket.disconnect();
-            server.player1 = null;
-            server.player2 = null;
         });
     });
 });

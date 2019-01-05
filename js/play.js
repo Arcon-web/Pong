@@ -15,8 +15,9 @@ let ballStartDelay = 1;
 
 let winner;
 
-let score1Text;
-let score2Text;
+var score1Text;
+var score2Text;
+var score3Text;
 
 Play.create = function() {
     //game settings
@@ -39,13 +40,15 @@ Play.create = function() {
     game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, 60);
 
     //text rendering
-    score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
-    score2Text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
+    score1Text = game.add.bitmapText(game.world.centerX-200, 200, "bitfont", "0", 128);
+    score2Text = game.add.bitmapText(game.world.centerX+200, 200, "bitfont", "0", 128);
+    score1Text.anchor.x = 0.5;
+    score2Text.anchor.x = 0.5;
 
     //set score
     Client.resetScore();
-    score1Text.text = 0;
-    score2Text.text = 0;
+    score1Text.setText = "0";
+    score2Text.setText = "0";
 }
 
 Play.update = function() {

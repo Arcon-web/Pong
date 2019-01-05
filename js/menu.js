@@ -1,12 +1,26 @@
 var Menu = {};
 
-Menu.create = function() {
-    let nameLabel = game.add.text(80, 80, 'Pong Online!',{font: '50px Arial', fill: '#ffffff'});
+var title;
+var subtitle;
+var timer = 0;
 
-    let startLabel = game.add.text(80, game.world.height-80, 'press the "spacebar" key to start',{font: '50px Arial', fill: '#ffffff'});
+Menu.create = function() {
+    title = game.add.bitmapText(game.world.centerX, 300, "bitfont", "PONG", 256);
+    title.anchor.x = 0.5;
+
+    subtitle = game.add.bitmapText(game.world.centerX, 800, "bitfont", "Press Start", 64);
+    subtitle.anchor.x = 0.5;
 
     let wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     wkey.onDown.addOnce(this.start, this);
+}
+
+Menu.update = function() {
+    timer += game.time.elapsed;   
+    if ( timer >= 500 )    {        
+        timer -= 500;        
+        subtitle.visible = !subtitle.visible;    
+    }
 }
 
 Menu.start = function(){

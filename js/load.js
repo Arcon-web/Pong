@@ -5,6 +5,7 @@ Load.preload = function() {
     this.load.crossOrigin = "Anonymous";
     game.load.image('paddle', 'assets/paddle.png');
     game.load.image('ball', 'assets/ball.png');
+    game.load.bitmapFont('bitfont', 'assets/font.png', "assets/font.fnt");
 }
 
 Load.create = function() {
