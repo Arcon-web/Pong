@@ -16,7 +16,7 @@ server.player2 = null;
 
 server.score1 = 0;
 server.score2 = 0;
-server.winningScore = 5;
+server.winningScore = 100;
 
 server.listen(process.env.PORT || 8081,function(){
     console.log('Listening on '+server.address().port);
