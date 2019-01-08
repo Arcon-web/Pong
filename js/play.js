@@ -10,18 +10,14 @@ let paddleVelocity = 600;
 let ball;
 let ballLaunched;
 let ballVelocity = 900;
-let ballRandomStartingAngleLeft = [120, 240];
-let ballRandomStartingAngleRight = [-60, 60];
+let ballRandomStartingAngle = [-60, 60, 120, 240];
 let ballStartDelay = 1;
 
-let scoreToWin = 5;
 let winner;
 
-let score1Text;
-let score2Text;
-
-let score2 = 0;
-let score1 = 0;
+var score1Text;
+var score2Text;
+var score3Text;
 
 Play.create = function() {
     //game settings
@@ -41,11 +37,18 @@ Play.create = function() {
 
     //movement of the ball
     ball.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
+    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, 60);
 
     //text rendering
-    score1Text = game.add.text(128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
-    score2Text = game.add.text(game.world.width - 128,128,'0',{font: "64px Gabriella", fill:"#ffffff", align: "center"});
+    score1Text = game.add.bitmapText(game.world.centerX-200, 200, "bitfont", "0", 128);
+    score2Text = game.add.bitmapText(game.world.centerX+200, 200, "bitfont", "0", 128);
+    score1Text.anchor.x = 0.5;
+    score2Text.anchor.x = 0.5;
+
+    //set score
+    Client.resetScore();
+    score1Text.setText = "0";
+    score2Text.setText = "0";
 }
 
 Play.update = function() {
@@ -63,30 +66,15 @@ Play.update = function() {
     game.physics.arcade.collide(paddle1,ball);
     game.physics.arcade.collide(paddle2,ball);
 
-    //adding scores when hit the wall
-    score1Text.text = score1;
-    score2Text.text = score2;
-
     if (ball.body.blocked.left)
     {
-        score2 +=1;
-        Client.resetBall(game.rnd.between(0, game.world.height));
+        Client.resetBall(game.rnd.between(0, game.world.height), game.rnd.pick(ballRandomStartingAngle));
+        Client.updateScore('2');
     }
     else if (ball.body.blocked.right)
     {
-        score1 +=1;
-        Client.resetBall(game.rnd.between(0, game.world.height));
-    }
-
-    if(score2 == scoreToWin)
-    {
-        game.state.start('end');
-        winner = "player2";
-    }
-    if(score1 == scoreToWin)
-    {
-        game.state.start('end');
-        winner = "player1";
+        Client.resetBall(game.rnd.between(0, game.world.height), game.rnd.pick(ballRandomStartingAngle));
+        Client.updateScore('1');
     }
 }
 
@@ -162,17 +150,30 @@ Play.movePaddle = function(id, y) {
     }
 }
 
-Play.launchBall = function() {
-    ball.visible = true;
-    //let randomAngle = game.rnd.pick(ballRandomStartingAngleRight.concat(ballRandomStartingAngleLeft));
-    
-    game.physics.arcade.velocityFromAngle(60, ballVelocity, ball.body.velocity);
-}
-
-Play.resetBall = function (y) {
+Play.resetBall = function (y, angle) {
     ball.reset(game.world.centerX, y);
     ball.visible = false;
-    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this);
+    game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, angle);
+}
+
+Play.launchBall = function(angle) {
+    ball.visible = true;
+    game.physics.arcade.velocityFromAngle(angle, ballVelocity, ball.body.velocity);
+}
+
+Play.updateScore = function (score1, score2) {
+    score1Text.text = score1;
+    score2Text.text = score2;
+}
+
+Play.winGame = function (player) {
+    if (player == "player1") {
+        winner = "player1";
+    }
+    if (player == "player2") {
+        winner = "player2";
+    }
+    game.state.start('end');
 }
 
 Play.waitGame = function () {

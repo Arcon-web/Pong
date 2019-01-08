@@ -14,12 +14,15 @@ app.get('/',function(req,res){
 server.player1 = null;
 server.player2 = null;
 
+server.score1 = 0;
+server.score2 = 0;
+server.winningScore = 100;
+
 server.listen(process.env.PORT || 8081,function(){
     console.log('Listening on http://localhost:'+server.address().port);
 });
 
 io.on('connection',function(socket){
-
     socket.on('newPlayer',function(){
         if (server.player1 == null) {
             // player 1
@@ -59,6 +62,7 @@ io.on('connection',function(socket){
 
         // start game when there are 2 players
         if (server.player1 != null && server.player2 != null) {
+            console.log("Game start");
             io.emit('startGame');
         }
 
@@ -66,22 +70,51 @@ io.on('connection',function(socket){
             socket.broadcast.emit('movePaddle', id, y);
         });
 
-        socket.on('resetBall',function(y){
-            socket.broadcast.emit('resetBall', y);
+        socket.on('resetBall',function(y, angle){
+            socket.broadcast.emit('resetBall', y, angle);
         });
+
+        socket.on('updateScore',function(player){
+            if (player == '1') {
+                server.score1 += 1;
+
+                if (server.score1 == server.winningScore) {
+                    io.emit('winGame', 'player1');
+                    console.log('Game end, player 1 won');
+                }
+            }
+
+            if (player == '2') {
+                server.score2 += 1;
+
+                if (server.score2 == server.winningScore) {
+                    io.emit('winGame', 'player2');
+                    console.log('Game end, player 2 won');
+                }
+            }
+
+            io.emit('updateScore', server.score1, server.score2);
+        });
+
+        socket.on('resetScore',function(){
+            server.score1 = 0;
+            server.score2 = 0;
+        });
+
+        // socket.on('disconnectPlayer',function(){
+        //     socket.disconnect();
+        // });
 
         socket.on('disconnect',function(){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');
-                socket.broadcast.emit('waitGame');
                 server.player1 = null;
-                server.player2 = null;
+                // socket.broadcast.emit('waitGame');
             }
             else if (socket.player.id == 2) {
                 console.log('Player 2 disconnected');
-                socket.broadcast.emit('waitGame');
-                server.player1 = null;
                 server.player2 = null;
+                // socket.broadcast.emit('waitGame');
             }
             else {
                 console.log('A spectator disconnected');

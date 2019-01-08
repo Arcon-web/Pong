@@ -1,14 +1,31 @@
 var End = {};
 
-End.create = function() {
-    let nameLabel = game.add.text(80, 80, winner+" won!" ,{font: '50px Arial', fill: '#ffffff'});
+var title;
+var subtitle;
+var timer;
 
-    let startLabel = game.add.text(80, game.world.height-80, 'press the "spacebar" key to start again',{font: '50px Arial', fill: '#ffffff'});
+End.create = function() {
+    // Client.disconnectPlayer();
+
+    title = game.add.bitmapText(game.world.centerX, 200, "bitfont", winner+" won!", 128);
+    title.anchor.x = 0.5;
+
+    subtitle = game.add.bitmapText(game.world.centerX, 800, "bitfont", "Press Start to play again", 64);
+    subtitle.anchor.x = 0.5;
 
     let wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     wkey.onDown.addOnce(this.start, this);
 }
 
+End.update = function() {
+    timer += game.time.elapsed;   
+    if ( timer >= 500 )    {        
+        timer -= 500;        
+        subtitle.visible = !subtitle.visible;    
+    }
+}
+
 End.start = function() {
-    game.state.start('play');
+    Client.disconnectPlayer();
+    // game.state.start('wait');
 }
