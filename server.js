@@ -15,7 +15,7 @@ server.player1 = null;
 server.player2 = null;
 
 server.listen(process.env.PORT || 8081,function(){
-    console.log('Listening on '+server.address().port);
+    console.log('Listening on http://localhost:'+server.address().port);
 });
 
 io.on('connection',function(socket){
