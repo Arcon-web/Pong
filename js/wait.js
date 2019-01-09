@@ -24,7 +24,7 @@ Wait.create = function(){
 	exitText = game.add.bitmapText(game.world.centerX, 850, "bitfontgray", "Gray: Exit to Menu", 32);
 	exitText.anchor.setTo(0.5,0.5);
 
-	exitKey3 = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+	exitKey3 = game.input.keyboard.addKey(Phaser.Keyboard.R);
 	
 	Client.askNewPlayer();
 }

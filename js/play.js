@@ -26,9 +26,9 @@ Play.create = function() {
     game.stage.backgroundColor = "#000";
 
     //controls for paddle
-    upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    exitKey1 = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    upKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+    downKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+    exitKey1 = game.input.keyboard.addKey(Phaser.Keyboard.R);
 
     //create the ball
     ball = this.createBall(game.world.centerX,game.world.centerY);
