@@ -42,8 +42,8 @@ Play.create = function() {
     game.time.events.add(Phaser.Timer.SECOND * ballStartDelay, this.launchBall, this, 60);
 
     //text rendering
-    score1Text = game.add.bitmapText(game.world.centerX-200, 200, "bitfont", "0", 128);
-    score2Text = game.add.bitmapText(game.world.centerX+200, 200, "bitfont", "0", 128);
+    score1Text = game.add.bitmapText(game.world.centerX-200, 200, "bitfontwhite", "0", 128);
+    score2Text = game.add.bitmapText(game.world.centerX+200, 200, "bitfontwhite", "0", 128);
     score1Text.anchor.x = 0.5;
     score2Text.anchor.x = 0.5;
 
