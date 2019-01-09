@@ -19,7 +19,7 @@ server.score2 = 0;
 server.winningScore = 100;
 
 server.listen(process.env.PORT || 8081,function(){
-    console.log('Listening on '+server.address().port);
+    console.log('Listening on http://localhost:'+server.address().port);
 });
 
 io.on('connection',function(socket){
