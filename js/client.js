@@ -46,6 +46,10 @@ Client.disconnectPlayer = function(){
 	// Client.socket.emit('disconnectPlayer');
 };
 
+Client.exit = function(){
+	window.location.href = "https://platform.arconconsole.be/";
+}
+
 
 
 // from server
