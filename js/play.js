@@ -2,7 +2,7 @@ var Play = {};
 
 let upKey;
 let downKey;
-let exitKey;
+let exitKey1;
 
 let paddle1;
 let paddle2;
@@ -28,7 +28,7 @@ Play.create = function() {
     //controls for paddle
     upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    exitKey = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    exitKey1 = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
     //create the ball
     ball = this.createBall(game.world.centerX,game.world.centerY);
@@ -64,7 +64,7 @@ Play.update = function() {
         Client.moveNone();
     }
 
-    if (exitKey.isDown) {
+    if (exitKey1.isDown) {
         game.state.start('menu');
     }
 
