@@ -5,7 +5,6 @@ var instructionText;
 var upText;
 var downText;
 var exitText;
-var exitKey3;
 
 Wait.create = function(){
 	game.stage.backgroundColor = "#000";
@@ -18,23 +17,22 @@ Wait.create = function(){
 	upText = game.add.bitmapText(game.world.centerX, 750, "bitfontblue", "Blue: Up", 32);
 	upText.anchor.setTo(0.5,0.5);
 
-	downText = game.add.bitmapText(game.world.centerX, 800, "bitfontyellow", "Yellow: Down", 32);
+	downText = game.add.bitmapText(game.world.centerX, 800, "bitfontred", "Red: Down", 32);
 	downText.anchor.setTo(0.5,0.5);
 
 	exitText = game.add.bitmapText(game.world.centerX, 850, "bitfontgray", "Gray: Exit to Menu", 32);
 	exitText.anchor.setTo(0.5,0.5);
 
-	exitKey3 = game.input.keyboard.addKey(Phaser.Keyboard.R);
+	let exitKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    exitKey.onDown.addOnce(this.exit, this);
 	
 	Client.askNewPlayer();
 }
 
-Wait.update = function() {
-	if (exitKey3.isDown) {
-        game.state.start('menu');
-    }
-}
-
 Wait.startGame = function(){
 	game.state.start('play');
+}
+
+Wait.exit = function() {
+	Client.reloadPage();
 }

@@ -5,26 +5,25 @@ var subtitle1;
 var subtitle2;
 var subtitle3;
 var timer = 0;
-var exitKey2;
 
 Menu.create = function() {
     title = game.add.bitmapText(game.world.centerX, 300, "bitfontwhite", "PONG", 256);
     title.anchor.x = 0.5;
 
-    subtitle1 = game.add.bitmapText(game.world.centerX - 250, 800, "bitfontwhite", "Press", 64);
+    subtitle1 = game.add.bitmapText(game.world.centerX - 290, 800, "bitfontwhite", "Press", 64);
     subtitle1.anchor.x = 0.5;
 
-    subtitle2 = game.add.bitmapText(game.world.centerX - 50, 800, "bitfontred", "Red", 64);
+    subtitle2 = game.add.bitmapText(game.world.centerX - 50, 800, "bitfontyellow", "Yellow", 64);
     subtitle2.anchor.x = 0.5;
 
-    subtitle3 = game.add.bitmapText(game.world.centerX + 200, 800, "bitfontwhite", "to Start", 64);
+    subtitle3 = game.add.bitmapText(game.world.centerX + 240, 800, "bitfontwhite", "to Start", 64);
     subtitle3.anchor.x = 0.5;
 
-    exitKey2 = game.input.keyboard.addKey(Phaser.Keyboard.R);
-    exitKey2.onDown.addOnce(this.exit, this);
+    let exitKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    exitKey.onDown.addOnce(this.exit, this);
 
-    let wkey = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    wkey.onDown.addOnce(this.start, this);
+    let startKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+    startKey.onDown.addOnce(this.start, this);
 }
 
 Menu.update = function() {

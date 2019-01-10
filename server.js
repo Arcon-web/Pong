@@ -101,10 +101,6 @@ io.on('connection',function(socket){
             server.score2 = 0;
         });
 
-        // socket.on('disconnectPlayer',function(){
-        //     socket.disconnect();
-        // });
-
         socket.on('disconnect',function(){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');

@@ -7,22 +7,20 @@ var subtitle3;
 var timer;
 
 End.create = function() {
-    // Client.disconnectPlayer();
-
     title = game.add.bitmapText(game.world.centerX, 200, "bitfontwhite", winner+" won!", 128);
     title.anchor.x = 0.5;
 
-    subtitle1 = game.add.bitmapText(game.world.centerX - 300, 800, "bitfontwhite", "Press", 64);
+    subtitle1 = game.add.bitmapText(game.world.centerX - 340, 800, "bitfontwhite", "Press", 64);
     subtitle1.anchor.x = 0.5;
 
-    subtitle2 = game.add.bitmapText(game.world.centerX - 100, 800, "bitfontred", "Red", 64);
+    subtitle2 = game.add.bitmapText(game.world.centerX - 100, 800, "bitfontyellow", "Yellow", 64);
     subtitle2.anchor.x = 0.5;
 
-    subtitle3 = game.add.bitmapText(game.world.centerX + 190, 800, "bitfontwhite", "to Restart", 64);
+    subtitle3 = game.add.bitmapText(game.world.centerX + 230, 800, "bitfontwhite", "to Restart", 64);
     subtitle3.anchor.x = 0.5;
 
-    let wkey = game.input.keyboard.addKey(Phaser.Keyboard.W);
-    wkey.onDown.addOnce(this.start, this);
+    let startKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+    startKey.onDown.addOnce(this.start, this);
 }
 
 End.update = function() {
@@ -36,6 +34,5 @@ End.update = function() {
 }
 
 End.start = function() {
-    Client.disconnectPlayer();
-    // game.state.start('wait');
+    Client.reloadPage();
 }

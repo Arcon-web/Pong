@@ -41,9 +41,8 @@ Client.resetScore = function(){
 	Client.socket.emit('resetScore');
 };
 
-Client.disconnectPlayer = function(){
+Client.reloadPage = function(){
 	location.reload();
-	// Client.socket.emit('disconnectPlayer');
 };
 
 
