@@ -21,6 +21,7 @@ Menu.create = function() {
     subtitle3.anchor.x = 0.5;
 
     exitKey2 = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    exitKey2.onDown.addOnce(this.exit, this);
 
     let wkey = game.input.keyboard.addKey(Phaser.Keyboard.W);
     wkey.onDown.addOnce(this.start, this);
@@ -34,12 +35,12 @@ Menu.update = function() {
         subtitle2.visible = !subtitle2.visible;
         subtitle3.visible = !subtitle3.visible;
     }
-
-    if (exitKey2.isDown) {
-        Client.exit();
-    }
 }
 
-Menu.start = function(){
+Menu.start = function() {
     game.state.start('wait');
+}
+
+Menu.exit = function() {
+    window.location = "https://platform.arconconsole.be/";
 }

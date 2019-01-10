@@ -109,12 +109,14 @@ io.on('connection',function(socket){
             if (socket.player.id == 1) {
                 console.log('Player 1 disconnected');
                 server.player1 = null;
-                // socket.broadcast.emit('waitGame');
+                server.player2 = null;
+                socket.broadcast.emit('disconnectPlayer');
             }
             else if (socket.player.id == 2) {
                 console.log('Player 2 disconnected');
+                server.player1 = null;
                 server.player2 = null;
-                // socket.broadcast.emit('waitGame');
+                socket.broadcast.emit('disconnectPlayer');
             }
             else {
                 console.log('A spectator disconnected');
