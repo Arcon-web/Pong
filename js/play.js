@@ -26,7 +26,7 @@ Play.create = function() {
 
     //controls for paddle
     upKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
-    downKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+    downKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
     //create the ball
     ball = this.createBall(game.world.centerX,game.world.centerY);
