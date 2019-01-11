@@ -2,7 +2,6 @@ var Play = {};
 
 let upKey;
 let downKey;
-let exitKey1;
 
 let paddle1;
 let paddle2;
@@ -51,6 +50,10 @@ Play.create = function() {
     Client.resetScore();
     score1Text.setText = "0";
     score2Text.setText = "0";
+
+    let exitKey = game.input.keyboard.addKey(Phaser.Keyboard.R);
+    exitKey.onDown.addOnce(this.exit, this);
+
 }
 
 Play.update = function() {
@@ -62,10 +65,6 @@ Play.update = function() {
     }
     else {
         Client.moveNone();
-    }
-
-    if (exitKey1.isDown) {
-        game.state.start('menu');
     }
 
     //collisions ball with paddles
@@ -184,4 +183,8 @@ Play.winGame = function (player) {
 
 Play.waitGame = function () {
     game.state.start('wait');
+}
+
+Play.exit = function() {
+    Client.reloadPage();
 }
