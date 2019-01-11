@@ -181,10 +181,6 @@ Play.winGame = function (player) {
     game.state.start('end');
 }
 
-Play.waitGame = function () {
-    game.state.start('wait');
-}
-
 Play.exit = function() {
     Client.reloadPage();
 }

@@ -56,10 +56,6 @@ Client.socket.on('startGame', function(id){
 	Wait.startGame();
 });
 
-Client.socket.on('waitGame', function(){
-	Play.waitGame();
-});
-
 Client.socket.on('movePaddle', function(id, y){
 	Play.movePaddle(id, y);
 });
